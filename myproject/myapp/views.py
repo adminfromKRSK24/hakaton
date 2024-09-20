@@ -33,10 +33,6 @@ from .data_store import TempUserData
 from myapp.models import Users
 import sqlite3
 
-import sqlite3
-
-import sqlite3
-
 def add_user(database: str, user: list[str]):
     # Используем контекстный менеджер для автоматического закрытия соединения
     with sqlite3.connect(database) as connection:
@@ -50,9 +46,6 @@ def add_user(database: str, user: list[str]):
             print(f"Пользователь {user[1]} добавлен.")
         except sqlite3.IntegrityError as e:
             print(f"Ошибка добавления пользователя: {e}")
-
-
-import sqlite3
 
 def add_event(database: str, event: list[str]):
     # Используем контекстный менеджер для автоматического закрытия соединения
