@@ -4,6 +4,7 @@ from myapp.models import Users
 import sqlite3
 from django.http import JsonResponse
 
+
 def add_event(database: str, event: list[str]):
     connection = sqlite3.connect(database)
     cursor = connection.cursor()
@@ -34,6 +35,9 @@ def add_user(database: str, user: list[str]):
     
     connection.commit()
     connection.close()
+ 
+def index(request):
+    return render(request, 'myapp/home.html')   
     
 def my_view(request):
     if request.method == 'POST':
@@ -52,7 +56,7 @@ def my_view(request):
 
     else:
         # Отображение пустой формы
-        return render(request, 'myapp/form.html')
+        return render(request, 'myapp/register.html')
         
 # Функция для обработки формы создания мероприятия
 def get_post_event(request):

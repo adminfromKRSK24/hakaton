@@ -4,70 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Создать мероприятие</title>
-
-</head>
-
-<body>
-  <div class="container">
-    <h1>Создание события</h1>
-    <form method="POST">
-      {% csrf_token %}
-      <form action="/create-event" method="POST" onsubmit="validateForm(event)">
-        <label for="type">Тип события:</label>
-        <select id="type" name="type">
-          <option value="">Выберите тип события</option>
-          <option value="Индивидуальная встреча">Индивидуальная встреча</option>
-          <option value="Круглый стол">Круглый стол</option>
-          <option value="Отраслевое мероприятие">Отраслевое мероприятие</option>
-          <option value="Внешняя открытая встреча">Внешняя открытая встреча</option>
-        </select>
-
-        <label for="theme">Тема мероприятия:</label>
-        <input id="theme" name="theme" type="text" placeholder="Введите тему мероприятия" />
-
-        <label for="tags">Выберите интересы:</label>
-        <div class="checkbox-container">
-          <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
-          <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
-          <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
-          <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
-        </div>
-
-        <label for="city">Город:</label>
-        <select id="city" name="city" onchange="updateLocationField()">
-          <option value="">Выберите город</option>
-          <option value="Москва">Москва</option>
-          <option value="Санкт-Петербург">Санкт-Петербург</option>
-          <option value="Новосибирск">Новосибирск</option>
-          <option value="Дубаи">Дубаи</option>
-          <option value="Китай">Китай</option>
-        </select>
-
-        <label for="location">Место проведения:</label>
-        <select id="location" name="location">
-          <option value="">Выберите место проведения</option>
-        </select>
-
-        <label for="date">Дата:</label>
-        <input id="date" name="date" type="date" />
-
-        <label for="start-time">Время начала:</label>
-        <input id="start-time" name="start-time" type="time" value="00:00" />
-
-        <label for="end-time">Время окончания:</label>
-        <input id="end-time" name="end-time" type="time" value="00:00" />
-
-        <label for="min-participants">Минимальное количество участников:</label>
-        <input id="min-participants" name="min-participants" type="number" min="2" />
-
-        <label for="max-participants">Максимальное количество участников:</label>
-        <input id="max-participants" name="max-participants" type="number" min="2" />
-
-        <input type="submit" value="Создать" />
-      </form>
-    </form>
-  </div>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       display: flex;
@@ -145,7 +82,95 @@
       margin-top: 100px;
       margin-bottom: 20px;
     }
+
+    /* Адаптация для мобильных устройств */
+    @media (max-width: 768px) {
+      h1 {
+        margin-top: 50px;
+      }
+
+      form {
+        padding: 15px;
+      }
+
+      input[type="submit"] {
+        font-size: 14px;
+      }
+    }
+
+    /* Адаптация для десктопов */
+    @media (min-width: 769px) {
+      body {
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+      }
+    }
   </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Создание события</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <form action="/create-event" method="POST" onsubmit="validateForm(event)">
+        <label for="type">Тип события:</label>
+        <select id="type" name="type">
+          <option value="">Выберите тип события</option>
+          <option value="Индивидуальная встреча">Индивидуальная встреча</option>
+          <option value="Круглый стол">Круглый стол</option>
+          <option value="Отраслевое мероприятие">Отраслевое мероприятие</option>
+          <option value="Внешняя открытая встреча">Внешняя открытая встреча</option>
+        </select>
+
+        <label for="theme">Тема мероприятия:</label>
+        <input id="theme" name="theme" type="text" placeholder="Введите тему мероприятия" />
+
+        <label for="tags">Выберите интересы:</label>
+        <div class="checkbox-container">
+          <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
+          <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
+          <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
+          <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
+        </div>
+
+        <label for="city">Город:</label>
+        <select id="city" name="city" onchange="updateLocationField()">
+          <option value="">Выберите город</option>
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Новосибирск">Новосибирск</option>
+          <option value="Дубаи">Дубаи</option>
+          <option value="Китай">Китай</option>
+        </select>
+
+        <label for="location">Место проведения:</label>
+        <select id="location" name="location">
+          <option value="">Выберите место проведения</option>
+        </select>
+
+        <label for="date">Дата:</label>
+        <input id="date" name="date" type="date" />
+
+        <label for="start-time">Время начала:</label>
+        <input id="start-time" name="start-time" type="time" value="00:00" />
+
+        <label for="end-time">Время окончания:</label>
+        <input id="end-time" name="end-time" type="time" value="00:00" />
+
+        <label for="min-participants">Минимальное количество участников:</label>
+        <input id="min-participants" name="min-participants" type="number" min="2" />
+
+        <label for="max-participants">Максимальное количество участников:</label>
+        <input id="max-participants" name="max-participants" type="number" min="2" />
+
+        <input type="submit" value="Создать" />
+      </form>
+    </form>
+  </div>
 
   <script>
     function updateLocationField() {
@@ -154,34 +179,22 @@
       locationSelect.innerHTML = '';
 
       if (city === "") {
-        locationSelect.innerHTML += `<option value="">Выберите место проведения</option>`;
+        locationSelect.innerHTML += '<option value="">Выберите место проведения</option>';
         return;
       }
 
       if (city === 'Новосибирск') {
-        locationSelect.innerHTML += `
-          <option value="">Выберите место проведения</option>
-          <option value="Переговорная комната 1">Переговорная комната 1</option>
-          <option value="Переговорная комната 2">Переговорная комната 2</option>
-          <option value="Переговорная комната 3">Переговорная комната 3</option>
-          <option value="Конференц-зал">Конференц-зал</option>
-        `;
+        locationSelect.innerHTML += 
+          '<option value="">Выберите место проведения</option>' +
+          '<option value="Переговорная комната 1">Переговорная комната 1</option>' +
+          '<option value="Переговорная комната 2">Переговорная комната 2</option>' +
+          '<option value="Переговорная комната 3">Переговорная комната 3</option>' +
+          '<option value="Конференц-зал">Конференц-зал</option>';
       } else {
-        locationSelect.innerHTML += `
-          <option value="">Выберите место проведения</option>
-          <option value="Переговорная комната A">Переговорная комната A</option>
-          <option value="Переговорная комната B">Переговорная комната B</option>
-        `;
-      }
-    }
-    
-    function toggleLocationField() {
-      const city = document.getElementById('city').value;
-      const locationContainer = document.getElementById('location-container');
-      if (city === 'Новосибирск') {
-        locationContainer.style.display = 'block';
-      } else {
-        locationContainer.style.display = 'none';
+        locationSelect.innerHTML += 
+          '<option value="">Выберите место проведения</option>' +
+          '<option value="Переговорная комната A">Переговорная комната A</option>' +
+          '<option value="Переговорная комната B">Переговорная комната B</option>';
       }
     }
 

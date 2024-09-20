@@ -7,5 +7,6 @@ class Users(models.Model):
 
     class Meta:
         db_table = 'users'  # Указываем имя существующей таблицы
-        db_table = 'Event'
+        # db_table = 'Event'
         managed = False  # Отключаем миграции для этой модели
+
