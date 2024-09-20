@@ -35,21 +35,38 @@ import sqlite3
 
 import sqlite3
 
+import sqlite3
+
 def add_user(database: str, user: list[str]):
-    connection = sqlite3.connect(database)
-    cursor = connection.cursor()
-    
-    # Используем параметризованный запрос для избежания SQL-инъекций
-    query = "INSERT INTO users (Surname, Name, Phone, Email) VALUES (?, ?, ?, ?);"
-    
-    try:
-        cursor.execute(query, (user[0], user[1], user[2], user[3]))
-        print(f"Пользователь {user[1]} добавлен.")
-    except sqlite3.IntegrityError as e:
-        print(f"Ошибка добавления пользователя: {e}")
-    
-    connection.commit()
-    connection.close()
+    # Используем контекстный менеджер для автоматического закрытия соединения
+    with sqlite3.connect(database) as connection:
+        cursor = connection.cursor()
+        
+        # Используем параметризованный запрос для избежания SQL-инъекций
+        query = "INSERT INTO users (Surname, Name, Phone, Email) VALUES (?, ?, ?, ?);"
+        
+        try:
+            cursor.execute(query, user)
+            print(f"Пользователь {user[1]} добавлен.")
+        except sqlite3.IntegrityError as e:
+            print(f"Ошибка добавления пользователя: {e}")
+
+
+import sqlite3
+
+def add_event(database: str, event: list[str]):
+    # Используем контекстный менеджер для автоматического закрытия соединения
+    with sqlite3.connect(database) as connection:
+        cursor = connection.cursor()
+        
+        # Используем параметризованный запрос для избежания SQL-инъекций
+        query = "INSERT INTO users (date, time_start, time_end, Name, City, Interes, Spiker, Categoris, Place) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
+        
+        try:
+            cursor.execute(query, event)
+            print(f"Событие {event[3]} добавлено.")
+        except sqlite3.IntegrityError as e:
+            print(f"Ошибка добавления события: {e}")
 
 
 # def add_user(database: str, user: list[str]):
