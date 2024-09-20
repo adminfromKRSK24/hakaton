@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ Мероприятия }}</title>
+</head>
+<body>
+    <h1>Ближайшие мероприятия:</h1>
+    <hr>
+    <div class="event">
+    <b><h3>{{ date }}</h3></b>
+    <p>Мероприятие {{ theme }} будет проходить в городе {{ city }}</p>
+    <p>{{ type }}</p>
+    <p>Место проведения: {{ location }}</p>
+    <p>Начало мероприятия: {{ start-time }}</p>
+    <p>Конец мероприятия: {{ end-time }}</p>
+    <p>Тэги: {{ tags }}</p>
+    </div>
+    
+    <hr>
+
+    <div class="event">
+        <b><h3>{{ date }}</h3></b>
+        <p>Мероприятие {{ theme }} будет проходить в городе {{ city }}</p>
+        <p>{{ type }}</p>
+        <p>Место проведения: {{ location }}</p>
+        <p>Начало мероприятия: {{ start-time }}</p>
+        <p>Конец мероприятия: {{ end-time }}</p>
+        <p>Тэги: {{ tags }}</p>
+        </div>
+        <hr>
+
+    <style>
+        .event {
+             margin-bottom: 40px;
+        }
+        hr {
+            border: 1px solid #ccc;
+        }
+    </style>    
+</body>
+</html>
