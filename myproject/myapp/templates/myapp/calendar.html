@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calendar</title>
+</head>
+<body>
+<h1>Ближайшие мероприятия:</h1>
+<hr/>
+<div class="event">
+<b><h3>{{ date }}</h3></b>
+<p>Мероприятие {{ theme }} будет проходить в городе {{ city }}</p>
+<p>{{ type }}</p>
+<p>Место проведения: {{ location }}</p>
+<p>Начало мероприятия: {{ start_time }}</p>
+<p>Конец мероприятия: {{ end_time }}</p>
+<p>Тэги: {{ tags }}</p>
+<hr/>
+</div>
+<div class_="event">
+<b><h3>2024-09-21</h3></b>
+<p>Мероприятие gerwegr будет проходить в городе Санкт-Петербург</p>
+<p>Место проведения: Переговорная комната A</p>
+<p>Начало мероприятия: 13:00</p>
+<p>Конец мероприятия: 14:00</p>
+<p>Интересы: tags</p>
+<hr/>
+</div><style>
+        .event {
+             margin-bottom: 40px;
+        }
+        hr {
+            border: 1px solid #ccc;
+        }
+    </style>
+</body>
+</html>

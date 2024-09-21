@@ -3,22 +3,67 @@ from .data_store import TempUserData
 from myapp.models import Users
 import sqlite3
 from django.http import JsonResponse
+from bs4 import BeautifulSoup
 
+def get_event(database: str):
+    connection = sqlite3.connect(database)
+    cursor = connection.cursor()
+    
+    query = f'SELECT * FROM Events ORDER BY id DESC LIMIT 1'
+    cursor.execute(query)
+    events = cursor.fetchone()
+
+    connection.close()
+
+    return list(events) if events else []
+
+
+def add_event_for_calendar(html_page: str, event: list[str]):
+    date = event[1]
+    start_time = event[2]
+    end_time = event[3]
+    name_event = event[4]
+    city = event[5]
+    tags = event[6]
+    location = event[9]
+
+    with open(html_page, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    old_tag = soup.body
+    new_tag = soup.new_tag("div", class_="event")
+    event_html = f"""
+        <b><h3>{date}</h3></b>
+        <p>Мероприятие {name_event} будет проходить в городе {city}</p>
+        <p>Место проведения: {location}</p>
+        <p>Начало мероприятия: {start_time}</p>
+        <p>Конец мероприятия: {end_time}</p>
+        <p>Интересы: {tags}</p>
+        <hr/>
+    """
+    parced_html = BeautifulSoup(event_html, 'html.parser')
+    new_tag.append(parced_html)
+    old_tag.insert(-2, new_tag)
+    with open(html_page, 'w', encoding='utf-8') as file:
+        file.write(str(soup))
 
 def add_event(database: str, event: list[str]):
     connection = sqlite3.connect(database)
     cursor = connection.cursor()
     
-    query = "insert into Event (date, time_start, time_end, Name, Place, Interes, Spiker) values (?, ?, ?, ?, ?, ?, ?);"
+    query = "insert into Events (date, time_start, time_end, Name, City, Interes, Spiker, Categoris, Place) values (?, ?, ?, ?, ?, ?, ?, ?, ?);"
 
     try:
-        cursor.execute(query, (event[0], event[1], event[2], event[3], event[4], event[5], event[6]))
+        cursor.execute(query, (event[0], event[1], event[2], event[3], event[4], event[5], event[6], event[7], event[8]))
         print(f"Событие добавлено.")
     except sqlite3.IntegrityError as e:
         print(f"Ошибка добавления события: {e}")
 
-    connection.commit()
+    connection.commit()    
     connection.close()
+    
+
 
 def add_user(database: str, user: list[str]):
     connection = sqlite3.connect(database)
@@ -37,7 +82,17 @@ def add_user(database: str, user: list[str]):
     connection.close()
  
 def index(request):
-    return render(request, 'myapp/home.html')   
+    return render(request, 'myapp/home.html')
+
+def show_calendar(request):
+    database = 'DB1.db'
+    event = get_event(database)
+    # page = './myapp/calendar.html'
+    # page = './templates/myapp/calendar.html'
+    page = '/Users/doduofor/goinfre/hakaton/myproject/myapp/templates/myapp/calendar.html'
+    add_event_for_calendar(page, event)
+    
+    return render(request, 'myapp/calendar.html')  
     
 def my_view(request):
     if request.method == 'POST':
@@ -65,7 +120,7 @@ def get_post_event(request):
         # Получение данных из формы
         event_type = request.POST.get('type')  # Тип события
         theme = request.POST.get('theme')  # Тема мероприятия
-        tags = request.POST.getlist('tags[]')  # Интересы (теги), несколько значений
+        tags = request.POST.getlist('tags')  # Интересы (теги), несколько значений
         city = request.POST.get('city')  # Город
         location = request.POST.get('location')  # Место проведения
         date = request.POST.get('date')  # Дата мероприятия
@@ -76,7 +131,7 @@ def get_post_event(request):
 
         database = 'DB1.db'
 
-        event_data = [date, start_time, end_time, city, location, theme, event_type]
+        event_data = [date, start_time, end_time, theme, city, "tags", " ", event_type, location]
 
         add_event(database, event_data)
         
@@ -85,3 +140,5 @@ def get_post_event(request):
     else:
         # Если метод запроса не POST, отображаем пустую форму
         return render(request, 'myapp/event.html')
+    
+
