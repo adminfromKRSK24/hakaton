@@ -1,54 +1,57 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бизнес Центр Крона</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #e9ecef;
             margin: 0;
+            background-image: url("{% static 'myapp/images/krona.png' %}"); /* Задний фон для десктопов */
+            background-size: cover; /* Масштабирование изображения */
+            background-position: center; /* Центрирование изображения */
+            background-repeat: no-repeat; /* Не повторять изображение */
         }
-        .header {
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .title {
-            font-size: 24px;
-            color: #343a40;
-            margin: 0;
-        }
+
         .button-container {
+            position: absolute; /* Позиционирование для кнопок */
+            top: 20px; /* Отступ сверху */
+            right: 20px; /* Отступ справа */
             display: flex;
-            align-items: center;
+            gap: 10px; /* Расстояние между кнопками */
         }
+
         .button {
-            padding: 12px 20px;
-            font-size: 16px;
-            background-color: #007BFF;
-            color: white;
+            display: block;
+            width: 180px; /* Ширина кнопок */
+            height: 50px; /* Высота кнопок */
+            background-color: #f5deb3; /* Бежевый цвет */
+            color: #343a40; /* Цвет текста */
             border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-left: 10px;
+            border-radius: 25px; /* Округление */
+            text-align: center;
+            line-height: 50px; /* Вертикальное центрирование текста */
+            font-size: 16px; /* Размер текста */
+            text-decoration: none; /* Убираем подчеркивание */
             transition: background-color 0.3s;
         }
+
         .button:hover {
-            background-color: #0056b3;
+            background-color: #e0c29f; /* Темнее бежевый при наведении */
         }
+
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: calc(100vh - 70px);
             text-align: center;
+            color: rgb(255, 0, 0); /* Цвет текста */
         }
+
         footer {
             margin-top: 20px;
             font-size: 14px;
@@ -56,43 +59,47 @@
             text-align: center;
         }
 
-        /* Медиа-запросы для адаптивности */
+        /* Адаптация для планшетов */
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .title {
-                font-size: 20px;
-            }
             .button-container {
-                margin-top: 20px; /* Отступ сверху для кнопок */
+                top: 10px;
+                right: 10px;
+                gap: 8px; /* Уменьшаем расстояние между кнопками на планшетах */
             }
+
             .button {
-                font-size: 14px;
-                padding: 10px 15px;
-                margin: 5px 0;
+                width: 150px; /* Уменьшение ширины на планшетах */
+                height: 45px; /* Уменьшение высоты */
+                font-size: 14px; /* Меньший шрифт */
+                line-height: 45px;
             }
         }
 
+        /* Адаптация для мобильных устройств (кнопки в столбик) */
         @media (max-width: 480px) {
-            .title {
-                font-size: 18px;
+            body {
+                background-image: url("{% static 'myapp/images/krona_m.png' %}"); /* Задний фон для мобильных устройств */
             }
+
+            .button-container {
+                flex-direction: column; /* Кнопки в столбик */
+                top: 5px;
+                right: 5px;
+                gap: 10px; /* Отступ между кнопками */
+            }
+
             .button {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-            .container {
-                height: auto;
-                padding: 20px;
+                width: 100%; /* Кнопки занимают всю ширину */
+                height: 40px; /* Еще меньше высота */
+                font-size: 14px; /* Еще меньше шрифт */
+                line-height: 40px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="header">
-        <h1 class="title">Бизнес Центр Крона</h1>
         <div class="button-container">
             <a href="{% url 'my_view' %}" class="button">Зарегистрироваться</a>
             <a href="{% url 'get_post_event' %}" class="button">Создать событие</a>
@@ -100,10 +107,10 @@
         </div>
     </div>
     <div class="container">
-        <p>Добро пожаловать в наш бизнес-центр!</p>
     </div>
     <footer>
         <p>&copy; 2024 Ваш Сайт</p>
     </footer>
 </body>
+
 </html>

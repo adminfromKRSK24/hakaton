@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -13,15 +15,55 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-image: url("{% static 'myapp/images/red.png' %}"); /* Задний фон изменен на reg.png */
+            background-size: cover; /* Задает размер фона, чтобы покрыть всю область */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat; /* Не повторяет изображение */
         }
         .container {
-            background: #fff;
+            background-color: rgba(255, 222, 200, 0.9);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%; /* Используйте 90% ширины для мобильных устройств */
-            max-width: 400px; /* Ограничение ширины для больших экранов */
+            width: 90%;
+            max-width: 400px;
+            position: relative;
         }
+
+        /* Стили для крестика */
+        .close-btn {
+            text-decoration: none;
+            font-size: 24px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: black;
+        }
+
+        /* Для больших экранов */
+        @media (min-width: 1024px) {
+            .close-btn {
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Для планшетов */
+        @media (max-width: 1024px) {
+            .close-btn {
+                top: 15px;
+                right: 15px;
+            }
+        }
+
+        /* Для телефонов */
+        @media (max-width: 768px) {
+            .close-btn {
+                top: 10px;
+                right: 10px;
+            }
+        }
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
@@ -38,16 +80,16 @@
         .form-group input[type="email"] {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #ffe600;
             border-radius: 4px;
-            box-sizing: border-box; /* Добавлено для корректного расчета ширины */
+            box-sizing: border-box;
         }
         .form-group input[type="checkbox"] {
             margin-right: 5px;
         }
         .checkbox-container {
             display: flex;
-            flex-direction: column; /* Изменено на колонну для удобства на мобильных устройствах */
+            flex-direction: column;
         }
         .form-group .error {
             color: red;
@@ -55,59 +97,114 @@
             display: none;
         }
         .form-group button {
-            width: 100%; /* Устанавливаем ширину на 100% */
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 4px;
-            background-color: #007bff;
+            background-color: #a1341e;
             color: #fff;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 10px; /* Добавлено для отступа сверху */
+            margin-top: 10px;
         }
         .form-group button:hover {
+            background-color: #ff5900;
+        }
+
+        /* Стили для модального окна */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .close-btn-modal {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close-btn-modal:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="javascript:history.back()" class="close-btn">×</a>
         <h2>Регистрация</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <form id="registrationForm">
-                <div class="form-group">
-                    <label for="surname">Фамилия:</label>
-                    <input type="text" id="surname" name="surname" required>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="surname">Фамилия:</label>
+                <input type="text" id="surname" name="surname" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона:</label>
+                <input type="tel" id="phone" name="phone" pattern="\+7\d{10}" placeholder="+7XXXXXXXXXX" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Почта:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="emailError" class="error">Неправильная форма почты. Должно быть .com или .ru</div>
+            </div>
+            <div class="form-group">
+                <label for="tags">Выберите интересы:</label>
+                <div class="checkbox-container">
+                    <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
+                    <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
+                    <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
+                    <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
                 </div>
-                <div class="form-group">
-                    <label for="name">Имя:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Номер телефона:</label>
-                    <input type="tel" id="phone" name="phone" pattern="\+7\d{10}" placeholder="+7XXXXXXXXXX" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Почта:</label>
-                    <input type="email" id="email" name="email" required>
-                    <div id="emailError" class="error">Неправильная форма почты. Должно быть .com или .ru</div>
-                </div>
-                <div class="form-group">
-                    <label for="tags">Выберите интересы:</label>
-                    <div class="checkbox-container">
-                        <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
-                        <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
-                        <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
-                        <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit">Отправить</button>
-                </div>
-            </form>
-        </form>  
+            </div>
+            <div class="form-group">
+                <button type="submit">Отправить</button>
+            </div>
+        </form>
     </div>
+
+    <!-- Модальное окно -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <p>Вы успешно зарегистрированы!</p>
+            <button class="close-btn-modal" onclick="goToHome()">Вернуться на главную</button>
+        </div>
+    </div>
+    
+    <script>
+        function goToHome() {
+            window.location.href="{% url 'home' %}"; // Переход на главную страницу
+        }
+    
+        function closeModal() {
+            const successModal = document.getElementById('successModal');
+            successModal.style.display = 'none'; // Закрываем модальное окно
+        }
+    </script>
 
     <script>
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
@@ -115,14 +212,22 @@
             const emailError = document.getElementById('emailError');
             const emailValue = emailInput.value;
             const emailPattern = /^[^\s@]+@[^\s@]+\.(com|ru)$/;
+            const successModal = document.getElementById('successModal');
 
             if (!emailPattern.test(emailValue)) {
                 emailError.style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault(); // Останавливаем отправку формы
             } else {
                 emailError.style.display = 'none';
+                event.preventDefault(); // Останавливаем отправку формы
+                successModal.style.display = 'flex'; // Показываем модальное окно
             }
         });
+
+        function closeModal() {
+            const successModal = document.getElementById('successModal');
+            successModal.style.display = 'none'; // Закрываем модальное окно
+        }
     </script>
 </body>
 </html>

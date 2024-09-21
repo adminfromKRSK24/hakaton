@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -7,30 +9,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-image: url("{% static 'myapp/images/red.png' %}"); /* Задний фон */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #ffffff; /* Цвет текста */
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 110vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
+      min-height: 100vh;
+      padding: 0 20px;
     }
 
     .container {
       text-align: center;
-      margin: 0 auto;
       max-width: 600px;
       width: 100%;
+      position: relative;
     }
 
     form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 222, 200, 0.9); /* Прозрачный белый фон */
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Тень для формы */
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
+      position: relative; /* Для правильного позиционирования крестика */
+    }
+
+    .close-button {
+      text-decoration: none;
+      font-size: 36px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #000000; /* Цвет крестика */
+    }
+
+    .close-button:hover {
+      color: #92000c; /* Цвет при наведении */
     }
 
     label {
@@ -38,6 +59,7 @@
       margin-bottom: 8px;
       font-weight: bold;
       text-align: left;
+      color: #000000;
     }
 
     input[type="text"],
@@ -46,26 +68,37 @@
     input[type="number"],
     select {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ffe600;
+      border-radius: 6px;
       box-sizing: border-box;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="time"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #007bff; /* Цвет рамки при фокусе */
     }
 
     input[type="submit"] {
       width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
+      padding: 14px;
+      background-color: #a1341e;
+      color: rgb(255, 255, 255);
       border: none;
-      border-radius: 4px;
-      font-size: 16px;
+      border-radius: 6px;
+      font-size: 18px;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     input[type="submit"]:hover {
-      background-color: #0056b3;
+      background-color: #9e3f25;
     }
 
     .checkbox-container {
@@ -79,34 +112,76 @@
     }
 
     h1 {
-      margin-top: 100px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #ffffff;
     }
 
     /* Адаптация для мобильных устройств */
     @media (max-width: 768px) {
       h1 {
-        margin-top: 50px;
+        font-size: 24px;
       }
 
       form {
-        padding: 15px;
+        padding: 20px;
       }
 
       input[type="submit"] {
-        font-size: 14px;
+        font-size: 16px;
+      }
+
+      .close-button {
+        font-size: 28px;
       }
     }
 
-    /* Адаптация для десктопов */
+    /* Для десктопов */
     @media (min-width: 769px) {
-      body {
-        padding: 20px;
+      form {
+        padding: 40px;
       }
 
       .container {
         max-width: 800px;
       }
+    }
+
+    /* Модальное окно */
+    .modal {
+      display: none; /* Скрыто по умолчанию */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: black;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 90%;
+      width: 400px;
+    }
+
+    .modal-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal-button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -114,62 +189,69 @@
 <body>
   <div class="container">
     <h1>Создание события</h1>
-    <form method="POST">
-      {% csrf_token %}
-      <form action="/create-event" method="POST" onsubmit="validateForm(event)">
-        <label for="type">Тип события:</label>
-        <select id="type" name="type">
-          <option value="">Выберите тип события</option>
-          <option value="Индивидуальная встреча">Индивидуальная встреча</option>
-          <option value="Круглый стол">Круглый стол</option>
-          <option value="Отраслевое мероприятие">Отраслевое мероприятие</option>
-          <option value="Внешняя открытая встреча">Внешняя открытая встреча</option>
-        </select>
+    <form id="event-form" onsubmit="validateForm(event)">
+      <a href="{% url 'home' %}" class="close-button">×</a>
 
-        <label for="theme">Тема мероприятия:</label>
-        <input id="theme" name="theme" type="text" placeholder="Введите тему мероприятия" />
+      <label for="type">Тип события:</label>
+      <select id="type" name="type">
+        <option value="">Выберите тип события</option>
+        <option value="Индивидуальная встреча">Индивидуальная встреча</option>
+        <option value="Круглый стол">Круглый стол</option>
+        <option value="Отраслевое мероприятие">Отраслевое мероприятие</option>
+        <option value="Внешняя открытая встреча">Внешняя открытая встреча</option>
+      </select>
 
-        <label for="tags">Выберите интересы:</label>
-        <div class="checkbox-container">
-          <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
-          <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
-          <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
-          <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
-        </div>
+      <label for="theme">Тема мероприятия:</label>
+      <input id="theme" name="theme" type="text" placeholder="Введите тему мероприятия" />
 
-        <label for="city">Город:</label>
-        <select id="city" name="city" onchange="updateLocationField()">
-          <option value="">Выберите город</option>
-          <option value="Москва">Москва</option>
-          <option value="Санкт-Петербург">Санкт-Петербург</option>
-          <option value="Новосибирск">Новосибирск</option>
-          <option value="Дубаи">Дубаи</option>
-          <option value="Китай">Китай</option>
-        </select>
+      <label for="tags">Выберите интересы:</label>
+      <div class="checkbox-container">
+        <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
+        <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
+        <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
+        <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
+      </div>
 
-        <label for="location">Место проведения:</label>
-        <select id="location" name="location">
-          <option value="">Выберите место проведения</option>
-        </select>
+      <label for="city">Город:</label>
+      <select id="city" name="city" onchange="updateLocationField()">
+        <option value="">Выберите город</option>
+        <option value="Москва">Москва</option>
+        <option value="Санкт-Петербург">Санкт-Петербург</option>
+        <option value="Новосибирск">Новосибирск</option>
+        <option value="Дубаи">Дубаи</option>
+        <option value="Китай">Китай</option>
+      </select>
 
-        <label for="date">Дата:</label>
-        <input id="date" name="date" type="date" />
+      <label for="location">Место проведения:</label>
+      <select id="location" name="location">
+        <option value="">Выберите место проведения</option>
+      </select>
 
-        <label for="start-time">Время начала:</label>
-        <input id="start-time" name="start-time" type="time" value="00:00" />
+      <label for="date">Дата:</label>
+      <input id="date" name="date" type="date" />
 
-        <label for="end-time">Время окончания:</label>
-        <input id="end-time" name="end-time" type="time" value="00:00" />
+      <label for="start-time">Время начала:</label>
+      <input id="start-time" name="start-time" type="time" value="00:00" />
 
-        <label for="min-participants">Минимальное количество участников:</label>
-        <input id="min-participants" name="min-participants" type="number" min="2" />
+      <label for="end-time">Время окончания:</label>
+      <input id="end-time" name="end-time" type="time" value="00:00" />
 
-        <label for="max-participants">Максимальное количество участников:</label>
-        <input id="max-participants" name="max-participants" type="number" min="2" />
+      <label for="min-participants">Минимальное количество участников:</label>
+      <input id="min-participants" name="min-participants" type="number" min="2" />
 
-        <input type="submit" value="Создать" />
-      </form>
+      <label for="max-participants">Максимальное количество участников:</label>
+      <input id="max-participants" name="max-participants" type="number" min="2" />
+
+      <input type="submit" value="Создать" />
     </form>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <p>Событие успешно создано!</p>
+      <button class="modal-button" onclick="closeModal()">Закрыть</button>
+    </div>
   </div>
 
   <script>
@@ -185,87 +267,26 @@
 
       if (city === 'Новосибирск') {
         locationSelect.innerHTML += 
-          '<option value="">Выберите место проведения</option>' +
           '<option value="Переговорная комната 1">Переговорная комната 1</option>' +
           '<option value="Переговорная комната 2">Переговорная комната 2</option>' +
           '<option value="Переговорная комната 3">Переговорная комната 3</option>' +
           '<option value="Конференц-зал">Конференц-зал</option>';
       } else {
         locationSelect.innerHTML += 
-          '<option value="">Выберите место проведения</option>' +
           '<option value="Переговорная комната A">Переговорная комната A</option>' +
           '<option value="Переговорная комната B">Переговорная комната B</option>';
       }
     }
 
-    function checkDuration() {
-      const startTime = document.getElementById('start-time').value;
-      const endTime = document.getElementById('end-time').value;
-
-      if (!startTime || !endTime) {
-        return false;
-      }
-
-      const start = new Date(`1970-01-01T${startTime}:00`);
-      const end = new Date(`1970-01-01T${endTime}:00`);
-      const duration = (end - start) / (1000 * 60 * 60);
-
-      if (duration > 3) {
-        alert('Продолжительность мероприятия не может превышать 3 часа.');
-        return false;
-      }
-
-      return true;
-    }
-
-    async function checkAvailability() {
-      const startTime = document.getElementById('start-time').value;
-      const endTime = document.getElementById('end-time').value;
-
-      const response = await fetch('/check-availability', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ startTime, endTime })
-      });
-
-      const result = await response.json();
-      return result.available;
-    }
-
     async function validateForm(event) {
       event.preventDefault();
+      // Здесь можно добавить валидацию формы, если необходимо
+      document.getElementById('successModal').style.display = 'flex'; // Показываем модальное окно
+    }
 
-      const type = document.getElementById('type').value;
-      const theme = document.getElementById('theme').value;
-      const tagsChecked = document.querySelectorAll('input[name="tags[]"]:checked').length;
-      const city = document.getElementById('city').value;
-      const date = document.getElementById('date').value;
-      const startTime = document.getElementById('start-time').value;
-      const endTime = document.getElementById('end-time').value;
-      const min_participants = document.getElementById('min-participants').value;
-      const max_participants = document.getElementById('max-participants').value;
-
-      if (!type || !theme || !tagsChecked || !city || !date || !startTime || !endTime || !min_participants || !max_participants) {
-        alert('Пожалуйста, заполните все поля.');
-        return;
-      }
-
-      if (!checkDuration()) {
-        return;
-      }
-
-      document.body.style.cursor = 'wait';
-      const available = await checkAvailability();
-      document.body.style.cursor = 'default';
-
-      if (!available) {
-        alert('Выбранное время уже занято. Пожалуйста, выберите другое время.');
-        return;
-      }
-
-      event.target.submit();
+    function closeModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'none'; // Закрываем модальное окно
     }
   </script>
 </body>

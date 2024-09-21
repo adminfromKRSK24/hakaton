@@ -4,36 +4,100 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Calendar</title>
+<title>Календарь событий</title>
+<style>
+    html {
+      font-family: sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+      border: 2px solid rgb(200,200,200);
+      letter-spacing: 1px;
+      font-size: 0.8rem;
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid rgb(190,190,190);
+      padding: 10px 20px;
+      width: 8.33%;
+      box-sizing: border-box;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    caption {
+      padding: 10px;
+    }
+    </style>
 </head>
 <body>
-<h1>Ближайшие мероприятия:</h1>
+<h1>Календарь событий</h1>
+<table>
+<tr>
+<th>Январь</th>
+<th>Февраль</th>
+<th>Март</th>
+<th>Апрель</th>
+<th>Май</th>
+<th>Июнь</th>
+<th>Июль</th>
+<th>Август</th>
+<th>Сентябрь</th>
+<th>Октябрь</th>
+<th>Ноябрь</th>
+<th>Декабрь</th>
+</tr>
+<tr>
+<td id="01"></td>
+<td id="02"></td>
+<td id="03"></td>
+<td id="04"></td>
+<td id="05"></td>
+<td id="06"></td>
+<td id="07"></td>
+<td id="08"></td>
+<td id="09"><div class_="event">
+<b><h3 class="date">2024-09-29</h3></b>
+<p>Мероприятие 123 будет проходить в городе Москва</p>
+<p>Место проведения: </p>
+<p>Начало мероприятия: 01:00</p>
+<p>Конец мероприятия: 02:00</p>
+<p>Интересы: IT</p>
 <hr/>
-<div class="event">
-<b><h3>{{ date }}</h3></b>
-<p>Мероприятие {{ theme }} будет проходить в городе {{ city }}</p>
-<p>{{ type }}</p>
-<p>Место проведения: {{ location }}</p>
-<p>Начало мероприятия: {{ start_time }}</p>
-<p>Конец мероприятия: {{ end_time }}</p>
-<p>Тэги: {{ tags }}</p>
+</div></td>
+<td id="10"></td>
+<td id="11"><div class_="event">
+<b><h3 class="date">2024-11-23</h3></b>
+<p>Мероприятие rewritegerwg будет проходить в городе Новосибирск</p>
+<p>Место проведения: </p>
+<p>Начало мероприятия: 12:00</p>
+<p>Конец мероприятия: 13:00</p>
+<p>Интересы: Auto</p>
 <hr/>
-</div>
-<div class_="event">
-<b><h3>2024-09-21</h3></b>
-<p>Мероприятие gerwegr будет проходить в городе Санкт-Петербург</p>
+</div><div class_="event">
+<b><h3 class="date">2024-11-23</h3></b>
+<p>Мероприятие rewritegerwg будет проходить в городе Новосибирск</p>
+<p>Место проведения: </p>
+<p>Начало мероприятия: 12:00</p>
+<p>Конец мероприятия: 13:00</p>
+<p>Интересы: Auto</p>
+<hr/>
+</div></td>
+<td id="12"><div class_="event">
+<b><h3 class="date">2024-12-14</h3></b>
+<p>Мероприятие rewrite будет проходить в городе Санкт-Петербург</p>
 <p>Место проведения: Переговорная комната A</p>
-<p>Начало мероприятия: 13:00</p>
-<p>Конец мероприятия: 14:00</p>
-<p>Интересы: tags</p>
+<p>Начало мероприятия: 12:00</p>
+<p>Конец мероприятия: 13:00</p>
+<p>Интересы: Auto</p>
 <hr/>
-</div><style>
-        .event {
-             margin-bottom: 40px;
-        }
-        hr {
-            border: 1px solid #ccc;
-        }
-    </style>
+</div></td>
+</tr>
+</table>
 </body>
 </html>

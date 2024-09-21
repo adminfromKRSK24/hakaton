@@ -17,9 +17,10 @@
         .container {
             background: #fff;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 90%; /* Используйте 90% ширины для мобильных устройств */
+            max-width: 400px; /* Ограничение ширины для больших экранов */
         }
         h2 {
             text-align: center;
@@ -34,12 +35,19 @@
         }
         .form-group input[type="text"],
         .form-group input[type="tel"],
-        .form-group input[type="email"],
-        .form-group select {
+        .form-group input[type="email"] {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-sizing: border-box; /* Добавлено для корректного расчета ширины */
+        }
+        .form-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .checkbox-container {
+            display: flex;
+            flex-direction: column; /* Изменено на колонну для удобства на мобильных устройствах */
         }
         .form-group .error {
             color: red;
@@ -47,7 +55,7 @@
             display: none;
         }
         .form-group button {
-            width: 100%;
+            width: 100%; /* Устанавливаем ширину на 100% */
             padding: 10px;
             border: none;
             border-radius: 4px;
@@ -55,6 +63,7 @@
             color: #fff;
             font-size: 16px;
             cursor: pointer;
+            margin-top: 10px; /* Добавлено для отступа сверху */
         }
         .form-group button:hover {
             background-color: #0056b3;
@@ -76,10 +85,6 @@
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="patronymic">Отчество:</label>
-                    <input type="text" id="patronymic" name="patronymic" required>
-                </div>
-                <div class="form-group">
                     <label for="phone">Номер телефона:</label>
                     <input type="tel" id="phone" name="phone" pattern="\+7\d{10}" placeholder="+7XXXXXXXXXX" required>
                 </div>
@@ -89,20 +94,19 @@
                     <div id="emailError" class="error">Неправильная форма почты. Должно быть .com или .ru</div>
                 </div>
                 <div class="form-group">
-                    <label for="interests">Интересы:</label>
-                    <select id="interests" name="interests" required>
-                        <option value="" disabled selected>Выберите интересы</option>
-                        <option value="IT">IT</option>
-                        <option value="AUTO">AUTO</option>
-                        <option value="SPORT">SPORT</option>
-                        <option value="BUSINESS">BUSINESS</option>
-                    </select>
+                    <label for="tags">Выберите интересы:</label>
+                    <div class="checkbox-container">
+                        <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
+                        <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
+                        <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
+                        <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <button type="submit">Отправить</button>
                 </div>
             </form>
-        </form>
+        </form>  
     </div>
 
     <script>
