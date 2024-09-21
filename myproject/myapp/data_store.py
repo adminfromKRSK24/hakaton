@@ -10,13 +10,3 @@ class TempUserData:
         user_data.save()
 
         return user_data
-
-    # def add_user(database: str, user: list[str]):
-    #     connection = sqlite3.connect(database)
-    #     cursor = connection.cursor()
-
-    #     query = f"insert into users (Surname, Second_name, Phone, Email) values ('{user[0]}', '{user[1]}', '{user[2]}', '[{user[3]}]');"
-    #     cursor.execute(query)
-
-    #     connection.commit()
-    #     connection.close()

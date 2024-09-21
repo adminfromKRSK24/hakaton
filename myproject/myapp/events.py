@@ -78,6 +78,5 @@ if __name__ == '__main__':
     page = './calendar.html'
 
     add_event_for_calendar(page, event)
-    # sort_event(page)
 
 

@@ -26,8 +26,6 @@ def get_phone(message):
     user_phone  = message.text
     user_telegram_id = message.from_user.id
     bot.send_message(message.from_user.id, f"Вы подписаны на события.")
-    # bot.send_message(message.from_user.id, f"Твой номер: {user_phone}")
-    # bot.send_message(message.from_user.id, f"Твой id: {user_telegram_id}")
 
     spisok = [user_phone, user_telegram_id]
     add_tele_id(database2, spisok)
@@ -116,7 +114,7 @@ def event_listener():
 
     while True:
         event = get_event(database2)
-        # tag[6]
+
         if event and (last_event_id is None or event[0] > last_event_id):
             last_event_id = event[0]
             event_name = event[4]
