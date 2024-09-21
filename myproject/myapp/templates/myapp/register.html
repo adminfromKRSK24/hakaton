@@ -154,36 +154,39 @@
     <div class="container">
         <a href="javascript:history.back()" class="close-btn">×</a>
         <h2>Регистрация</h2>
-        <form id="registrationForm">
-            <div class="form-group">
-                <label for="surname">Фамилия:</label>
-                <input type="text" id="surname" name="surname" required>
-            </div>
-            <div class="form-group">
-                <label for="name">Имя:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Номер телефона:</label>
-                <input type="tel" id="phone" name="phone" pattern="\+7\d{10}" placeholder="+7XXXXXXXXXX" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Почта:</label>
-                <input type="email" id="email" name="email" required>
-                <div id="emailError" class="error">Неправильная форма почты. Должно быть .com или .ru</div>
-            </div>
-            <div class="form-group">
-                <label for="tags">Выберите интересы:</label>
-                <div class="checkbox-container">
-                    <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
-                    <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
-                    <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
-                    <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
+        <form method="POST">
+            {% csrf_token %}
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="surname">Фамилия:</label>
+                    <input type="text" id="surname" name="surname" required>
                 </div>
-            </div>
-            <div class="form-group">
-                <button type="submit">Отправить</button>
-            </div>
+                <div class="form-group">
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефона:</label>
+                    <input type="tel" id="phone" name="phone" pattern="\+7\d{10}" placeholder="+7XXXXXXXXXX" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Почта:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div id="emailError" class="error">Неправильная форма почты. Должно быть .com или .ru</div>
+                </div>
+                <div class="form-group">
+                    <label for="tags">Выберите интересы:</label>
+                    <div class="checkbox-container">
+                        <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
+                        <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
+                        <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
+                        <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Отправить</button>
+                </div>
+            </form>
         </form>
     </div>
 

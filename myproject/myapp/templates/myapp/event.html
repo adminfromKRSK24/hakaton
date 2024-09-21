@@ -189,60 +189,63 @@
 <body>
   <div class="container">
     <h1>Создание события</h1>
-    <form id="event-form" onsubmit="validateForm(event)">
-      <a href="{% url 'home' %}" class="close-button">×</a>
+    <form method="POST">
+      {% csrf_token %}
+      <form id="event-form" onsubmit="validateForm(event)">
+        <a href="{% url 'home' %}" class="close-button">×</a>
 
-      <label for="type">Тип события:</label>
-      <select id="type" name="type">
-        <option value="">Выберите тип события</option>
-        <option value="Индивидуальная встреча">Индивидуальная встреча</option>
-        <option value="Круглый стол">Круглый стол</option>
-        <option value="Отраслевое мероприятие">Отраслевое мероприятие</option>
-        <option value="Внешняя открытая встреча">Внешняя открытая встреча</option>
-      </select>
+        <label for="type">Тип события:</label>
+        <select id="type" name="type">
+          <option value="">Выберите тип события</option>
+          <option value="Индивидуальная встреча">Индивидуальная встреча</option>
+          <option value="Круглый стол">Круглый стол</option>
+          <option value="Отраслевое мероприятие">Отраслевое мероприятие</option>
+          <option value="Внешняя открытая встреча">Внешняя открытая встреча</option>
+        </select>
 
-      <label for="theme">Тема мероприятия:</label>
-      <input id="theme" name="theme" type="text" placeholder="Введите тему мероприятия" />
+        <label for="theme">Тема мероприятия:</label>
+        <input id="theme" name="theme" type="text" placeholder="Введите тему мероприятия" />
 
-      <label for="tags">Выберите интересы:</label>
-      <div class="checkbox-container">
-        <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
-        <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
-        <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
-        <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
-      </div>
+        <label for="tags">Выберите интересы:</label>
+        <div class="checkbox-container">
+          <label><input type="checkbox" name="tags[]" value="IT" /> IT</label>
+          <label><input type="checkbox" name="tags[]" value="Auto" /> Auto</label>
+          <label><input type="checkbox" name="tags[]" value="Sport" /> Sport</label>
+          <label><input type="checkbox" name="tags[]" value="Business" /> Business</label>
+        </div>
 
-      <label for="city">Город:</label>
-      <select id="city" name="city" onchange="updateLocationField()">
-        <option value="">Выберите город</option>
-        <option value="Москва">Москва</option>
-        <option value="Санкт-Петербург">Санкт-Петербург</option>
-        <option value="Новосибирск">Новосибирск</option>
-        <option value="Дубаи">Дубаи</option>
-        <option value="Китай">Китай</option>
-      </select>
+        <label for="city">Город:</label>
+        <select id="city" name="city" onchange="updateLocationField()">
+          <option value="">Выберите город</option>
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Новосибирск">Новосибирск</option>
+          <option value="Дубаи">Дубаи</option>
+          <option value="Китай">Китай</option>
+        </select>
 
-      <label for="location">Место проведения:</label>
-      <select id="location" name="location">
-        <option value="">Выберите место проведения</option>
-      </select>
+        <label for="location">Место проведения:</label>
+        <select id="location" name="location">
+          <option value="">Выберите место проведения</option>
+        </select>
 
-      <label for="date">Дата:</label>
-      <input id="date" name="date" type="date" />
+        <label for="date">Дата:</label>
+        <input id="date" name="date" type="date" />
 
-      <label for="start-time">Время начала:</label>
-      <input id="start-time" name="start-time" type="time" value="00:00" />
+        <label for="start-time">Время начала:</label>
+        <input id="start-time" name="start-time" type="time" value="00:00" />
 
-      <label for="end-time">Время окончания:</label>
-      <input id="end-time" name="end-time" type="time" value="00:00" />
+        <label for="end-time">Время окончания:</label>
+        <input id="end-time" name="end-time" type="time" value="00:00" />
 
-      <label for="min-participants">Минимальное количество участников:</label>
-      <input id="min-participants" name="min-participants" type="number" min="2" />
+        <label for="min-participants">Минимальное количество участников:</label>
+        <input id="min-participants" name="min-participants" type="number" min="2" />
 
-      <label for="max-participants">Максимальное количество участников:</label>
-      <input id="max-participants" name="max-participants" type="number" min="2" />
+        <label for="max-participants">Максимальное количество участников:</label>
+        <input id="max-participants" name="max-participants" type="number" min="2" />
 
-      <input type="submit" value="Создать" />
+        <input type="submit" value="Создать" />
+      </form>
     </form>
   </div>
 

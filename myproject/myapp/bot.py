@@ -1,5 +1,5 @@
 # name: HakatonBot
-# username: Krona_s21_hakaton_bot
+# username: @Krona_s21_hakaton_bot
 # token: 7388672440:AAFJZYvdTQ69Ojjr9mE8jrMDCuQv1Dg6FPI
 
 import telebot
@@ -11,7 +11,7 @@ bot = telebot.TeleBot('7388672440:AAFJZYvdTQ69Ojjr9mE8jrMDCuQv1Dg6FPI')
 
 user_phone: str = ''
 user_telegram_id = 0
-database2 = '/Users/doduofor/goinfre/hakaton/myproject/DB1.db'
+database2 = '../DB1.db'
 
 @bot.message_handler(content_types=['text'])
 def start(message):
@@ -65,7 +65,6 @@ def get_users(database2: str, tag: str):
     connection = sqlite3.connect(database2)
     cursor = connection.cursor()
 
-    # query = f'SELECT Telegram FROM TG_id'
     query = f"""
         SELECT Telegram.TG_id
         FROM Telegram
