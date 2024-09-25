@@ -1,13 +1,9 @@
-# name: HakatonBot
-# username: @Krona_s21_hakaton_bot
-# token: 7388672440:AAFJZYvdTQ69Ojjr9mE8jrMDCuQv1Dg6FPI
-
 import telebot
 import sqlite3
 import time
 from threading import Thread
 
-bot = telebot.TeleBot('7388672440:AAFJZYvdTQ69Ojjr9mE8jrMDCuQv1Dg6FPI')
+bot = telebot.TeleBot('token')
 
 user_phone: str = ''
 user_telegram_id = 0
