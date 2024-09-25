@@ -5,12 +5,12 @@ from email.mime.multipart import MIMEMultipart
 
 # рассылка писем
 def sending_letters(users_list: list[str], body: str, subject: str):
-        login: str = 'hakatons21@gmail.com'
-        password: str = 'fcastlvxcmdwtvel'
+        login: str = ''
+        password: str = ''
 
         msg = MIMEMultipart()
         msg['From'] = login
-        # msg['To'] = 'alexeyshu86@mail.ru'
+        # msg['To'] = ''
         msg['Subject'] = subject
 
         msg.attach(MIMEText(body, 'plain'))  # Прикрепляем текст письма
@@ -38,8 +38,3 @@ if __name__ == '__main__':
         """
         subject = 'Почему ненаблюдаемо явление культурологического порядка?'
         sending_letters(users_list, text, subject)
-
-
-# hakatons21@gmail.com - почта
-# Ghbdtn777 - пароль от почты
-# fcastlvxcmdwtvel - пароль приложений
